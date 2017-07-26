@@ -12,3 +12,8 @@ theme = "hugo-material-docs"
 	name   = "Getting started"
 	url    = "getting-started/"
 	weight = 10
+
+[[menu.main]]
+	name   = "Probes"
+	url    = "probes/"
+	weight = 20
