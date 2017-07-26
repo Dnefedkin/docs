@@ -3,17 +3,21 @@ languageCode = "en-us"
 title = "Cloudprober"
 theme = "hugo-material-docs"
 
+[params]
+  provider = "GitHub"
+  repo_url = "https://github.com/google/cloudprober"
+  
 [[menu.main]]
-	name   = "Overview"
-	url    = "/"
-	weight = 1
+  name   = "Overview"
+  url    = "/"
+  weight = 1
 
 [[menu.main]]
-	name   = "Getting started"
-	url    = "getting-started/"
-	weight = 10
+  name   = "Getting started"
+  url    = "getting-started/"
+  weight = 10
 
 [[menu.main]]
-	name   = "Probes"
-	url    = "probes/"
-	weight = 20
+  name   = "Probes"
+  url    = "probes/"
+  weight = 20
