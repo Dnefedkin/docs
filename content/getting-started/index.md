@@ -13,14 +13,13 @@ docker run --net host -v /tmp:/tmp cloudprober/cloudprober
 # management easier.
 ```
 
-This will start cloudprober with only the "sysvars" module (no probes). It will
-write metrics to the stdout in cloudprober's line protocol format (to be
-documented). It will also start a Prometheus exporter that can be accessed at:
-http://localhost:9313
-
-If docker is not an option, you can also download the pre-built binaries
-directly from the Github's
-[releases](http://github.com/google/cloudprober/releases) page.
+This will download the latest cloudprober docker image and start it. You can
+also download pre-built binaries for Linux, Mac OS and Windows from the
+project's [releases page](http://github.com/google/cloudprober/releases).
+Without any config, cloudprober will run only the "sysvars" module (no probes)
+and write metrics to stdout in cloudprober's line protocol format (to be
+documented). It will also start a [Prometheus](http://prometheus.io) exporter
+at: http://localhost:9313
 
 Since sysvars variables are not very interesting themselves, lets add a simple
 config that probes Google's homepage:
@@ -51,7 +50,7 @@ docker run --net host -v /tmp/cloudprober.cfg:/etc/cloudprober.cfg \
 ./cloudprober --config_file /tmp/cloudprober.cfg
 ```
 
-You'll see probe metrics at the URL: http://hostname:9313/metrics and at the
+You'll see probe metrics at the URL: http://hostname:9313/metrics and at
 stdout:
 
 ```
@@ -60,14 +59,16 @@ cloudprober 1500590430132947314 1500590530 labels=ptype=sysvars,probe=sysvars ho
 cloudprober 1500590430132947315 1500590530 labels=ptype=http,probe=google-http,dst=www.google.com sent=19 rcvd=19 rtt=2116441 timeouts=0 resp-code=map:code,200:19
 ```
 
-Since this is not very interesting by itself, let's run a prometheus instance to
-scrape our metrics and generate pretty graphs.
+This information is good for debugging monitoring issues, but to really make
+sense of this data, you'll need to feed this data to another monitoring system
+like StackDriver or Prometheus. Lets set up a Prometheus and Grafana stack to
+make pretty graphs for us.
 
 ## Running Prometheus
 
-Download prometheus binary from the prometheus [release
-page](https://prometheus.io/download/). You can use a config like the following
-to scrape cloudprober running on the local host.
+Download prometheus binary from its [release page
+](https://prometheus.io/download/). You can use a config like the following
+to scrape cloudprober running on the same host.
 
 ```shell
 # Write config to a file in /tmp
@@ -87,9 +88,11 @@ Prometheus provides a web interface at http://localhost:9090. You can explore
 the probe metrics and build useful graphs through this interface. All core
 probes in cloudprober export at least 3 counters:
 
-*   _sent_: Number of requests sent (type of request depends on the probe type).
-*   _rcvd_: Number of responses received.
-*   _rtt_:  Total round trip time in microseconds.
+*   _sent_: Number of requests sent. Type of request depends on the probe type,
+	    for example ping probe sends ICMP requests.
+*   _rcvd_: Number of responses received. Deficit between _sent_ and _rcvd_
+            indicates loss.
+*   _rtt_:  Total round trip time in microseconds for all responses received.
 
 Using these counters, loss and latency can be calculated as:
 
@@ -101,3 +104,15 @@ latency = rate(rtt) / rate(rcvd)
 Assuming that prometheus is running at `localhost:9090`, graphs depicting loss
 ratio and latency over time can be accessed in prometheus at: [loss and
 latency](http://localhost:9090/graph?g0.range_input=1h&g0.expr=\(rate\(sent%5B1m%5D\)+-+rate\(rcvd%5B1m%5D\)\)+%2F+rate\(sent%5B1m%5D\)&g0.tab=0&g1.range_input=1h&g1.expr=rate\(rtt%5B1m%5D\)+%2F+rate\(rcvd%5B1m%5D\)+%2F+1000&g1.tab=0).
+Even though prometheus provides a graphing interface, Grafana provides much
+richer interface and has excellent support for prometheus.
+
+## Grafana
+
+[Grafana](https://grafana.com) is a popular tool for building beautiful
+dashboards. Grafana has native support for prometheus and thanks to the 
+excellent support for prometheus in Cloudprober itself, it's a breeze to build
+Grafana dashboards from Cloudprober's probe results.
+
+To get started with Grafana, follow the Grafana-Prometheus
+[integration guide](https://prometheus.io/docs/visualization/grafana/).
