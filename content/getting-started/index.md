@@ -109,7 +109,7 @@ richer interface and has excellent support for prometheus.
 
 ## Grafana
 
-[Grafana](https://grafana.com) is a popular tool for building beautiful
+[Grafana](https://grafana.com) is a popular tool for building monitoring
 dashboards. Grafana has native support for prometheus and thanks to the 
 excellent support for prometheus in Cloudprober itself, it's a breeze to build
 Grafana dashboards from Cloudprober's probe results.
