@@ -6,6 +6,7 @@ weight: 1
 
 [![Build
 Status](https://travis-ci.org/google/cloudprober.svg?branch=master)](https://travis-ci.org/google/cloudprober)
+[![Build status](https://ci.appveyor.com/api/projects/status/ypg1okxxfedwkksk?svg=true)](https://ci.appveyor.com/project/manugarg/cloudprober-wwcpu)
 
 Cloudprober is a monitoring software that makes it super-easy to monitor
 availability and performance of various components of your system. Cloudprober
