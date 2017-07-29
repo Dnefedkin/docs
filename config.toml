@@ -18,6 +18,6 @@ theme = "hugo-material-docs"
   weight = 10
 
 [[menu.main]]
-  name   = "Probes"
-  url    = "probes/"
+  name   = "What is a Probe"
+  url    = "probe/"
   weight = 20
