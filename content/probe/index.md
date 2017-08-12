@@ -20,14 +20,14 @@ timeout  | Probe timeout (in milliseconds).
 targets  | Targets to run probe against.
 
 Each probe also has optional probe-type specific config, for example,
-relative_url for HTTP probes. All probe types, except for the external probe
-type (explained below), export following metrics at a minimum:
+relative_url for HTTP probes. All probe types export following metrics at a
+minimum:
 
 |Metric | Description|
 |-------|------------|
-|sent   | Total number of requests sent. Type of request depends on the probe <br> type (ICMP request for PING, HTTP request for HTTP, etc). |
-|rcvd   | Total number of responses received.|
-|rtt    | Total roundtrip time for the responses received (in microseconds).|
+|total  | Total number of probes. |
+|success| Number of successful probes. Deficit between _total_ and _success_ indicates failures.|
+|latency| Total (cumulative) probe latency (in microseconds).|
 
 
 ## Probe Types
@@ -46,9 +46,10 @@ Cloudprober has built-in support for the following probe types:
 options`](http://github.com/google/cloudprober/tree/master/probes/ping/config.proto)
 
 Ping probe type implements a fast ping prober, that can probe hundreds of
-targets in parallel. Probe results are reported as number of packets sent,
-received and round-trip time. It supports raw sockets (requires root access) as
-well as datagram sockets for ICMP (doesn't require root access).
+targets in parallel. Probe results are reported as number of packets sent
+(total), received (success) and round-trip time (latency). It supports raw
+sockets (requires root access) as well as datagram sockets for ICMP (doesn't
+require root access).
 
 ICMP datagram sockets are not enabled by default on most Linux systems. You can
 enable them by running the following command:
@@ -60,20 +61,20 @@ enable them by running the following command:
 options`](http://github.com/google/cloudprober/tree/master/probes/http/config.proto)
 
 HTTP probe is be used to send HTTP(s) requests to a target and verify that a
-reponse is received. Probe results are reported as number of requests sent,
-responses received, overall round-trip time and a map of response code counts.
-Requests are marked as failed (not counted towards received) if there is a
-timeout.
+reponse is received. Apart from core probe mertrics (total, success and
+latency), HTTP probes also export a map of response code counts. Requests are
+marked as failed if there is a timeout.
 
 ### UDP
 
 [`Code`](http://github.com/google/cloudprober/tree/master/probes/udp) | [`Config
 options`](http://github.com/google/cloudprober/tree/master/probes/udp/config.proto)
 
-UDP probe type sends a UDP packet to the configured targets. UDP probe (and all
+UDP probe sends a UDP packet to the configured targets. UDP probe (and all
 other probes that use ports) provides more coverage for the network elements on
-the data path as most forwarders use 5-tuple hashing and usign a new source port
-for each probe ensures that we hit different network element each time.
+the data path as most packet forwarding elements use 5-tuple hashing and using
+a new source port for each probe ensures that we hit different network element
+each time.
 
 ### DNS
 
