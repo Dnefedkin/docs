@@ -97,12 +97,17 @@ data through the standard channel.
 External probe can be configured in two modes:
 
 *  __ONCE__:
-   In this mode, external program is executed again for probe run and results
-   are returned on stdout. This is a simple model but it doesn't allow the
-   external program to maintain state and multiple forks can be expensive
-   depending on the frequency of the probes.
+   In this mode, an external program is executed for each probe run. Exit
+   status of the program determines the success or failure of the probe.
+   External probe can optionally be configured to interpret external program's
+   output as metrics. This is a simple model but it doesn't allow the external
+   program to maintain state and multiple forks can be expensive depending on
+   the frequency of the probes.
 
 *  __SERVER__:
-   In this mode, external program is executed only once (or whenever it stops
-   running) and is expected to run in a daemon mode. Cloudprober and external
-   probe process communicate with each other over stdin/stdout using RPC.
+   In this mode, external program is expected to run in server mode. Cloudprober
+   automatically starts the external program if it's not running at the time of
+   the probe execution. Cloudprober and external probe process communicate with
+   each other over stdin/stdout using protobuf messages defined in
+   [server.proto](
+   https://github.com/google/cloudprober/blob/master/probes/external/serverutils/server.proto).
