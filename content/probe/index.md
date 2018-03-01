@@ -1,13 +1,13 @@
 ---
+menu:
+    main:
+        name: "What is a Probe"
+        weight: 1
 title: "Probe"
 date: 2017-07-25T17:24:32-07:00
-weight: 20
 ---
 Cloudprober's main task is to run probes. A probe executes something, usually
-against a set of targets, to verify that the systems are working as expected.
-For example, an HTTP probe executes an HTTP request against a web server to
-verify that the web server is available. Cloudprober probes run repeatedly at a
-configured interval and export probe results as a set of metrics.
+against a set of targets, to verify that the systems are working as expected from consumers' point of view. For example, an HTTP probe executes an HTTP request against a web server to verify that the web server is available. Cloudprober probes run repeatedly at a configured interval and export probe results as a set of metrics.
 
 A probe is defined as a set of the following fields:
 
@@ -27,7 +27,7 @@ minimum:
 |-------|------------|
 |total  | Total number of probes. |
 |success| Number of successful probes. Deficit between _total_ and _success_ indicates failures.|
-|latency| Total (cumulative) probe latency (in microseconds).|
+|latency| Cumulative probe latency. Latency can be configured to be a distribution (histogram) metric through a config option. By default it's just a counter like _total_ and _success_|
 
 
 ## Probe Types
@@ -39,6 +39,8 @@ Cloudprober has built-in support for the following probe types:
 * [UDP](#udp)
 * [DNS](#dns)
 * [External](#external)
+
+More probe types can be added through cloudprober extensions (to be documented).
 
 ### Ping
 

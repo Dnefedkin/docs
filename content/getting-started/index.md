@@ -1,6 +1,8 @@
 ---
-title: Getting started
-weight: 10
+menu:
+    main:
+        weight: -90
+title: Getting Started
 ---
 
 ## Installation
@@ -52,13 +54,12 @@ EOF
 
 This config adds an HTTP probe that accesses the homepage of the target
 "www.google.com" every 5s with a timout of 1s. Cloudprober configuration is
-specified in the textual protobuf format, with config schema described by the
+specified in the text protobuf format, with config schema described by the
 proto file: [config.proto
 ](https://github.com/google/cloudprober/blob/master/config/config.proto).
 
 Assuming that you saved this file at /tmp/cloudprober.cfg (following the
-command above), you can have cloudprober use this config file using following
-command line:
+command above), you can have cloudprober use this config file using the following command line:
 
 ```shell
 ./cloudprober --config_file /tmp/cloudprober.cfg

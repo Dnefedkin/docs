@@ -1,7 +1,11 @@
 ---
+menu:
+    main:
+        name: "Overview"
+        weight: -100
 title: Cloudprober
 type: index
-weight: 1
+weight: -100
 ---
 
 [![Build
@@ -33,16 +37,14 @@ Case](https://cloudprober.github.io/diagrams/cloudprober_use_case.svg)
     Cloudprober exports probe results as counter based metrics that work well
     with Prometheus and Grafana.
 *   Built-in implementations for the most common probe types: PING, HTTP, UDP,
-    DNS.
+    DNS.    
 *   Abritrary, complex probes can be run through the external probe type. For
     example, you could write a simple script to insert and delete a row in your
     database, and execute this script through the 'EXTERNAL' probe type.
-*   Fast and efficient ping prober implementation that allows probing thousands
-    of hosts with minimal resources.
+*   Standard metrics - _total_, _success_, _latency_. Latency can be configured     to be a distribution (histogram) metric, allowing calculations of               percentiles.
+*   Fast and efficient PING and UDP probe implementations that allows probing       thousands of hosts with minimal resources.
 *   Strong focus on ease of deployment. Cloudprober is written entirely in Go
-    and compiles into a static binary. It can be easily deployed through docker
-    containers. Thanks to the automated target discovery, there is usually no
-    need to re-deploy or re-configure cloudprober in response to the most of the
+    and compiles into a static binary. It can be easily deployed, either as a standalone binary or through docker containers. Thanks to the automated, continuous, target discovery, there is usually no need to re-deploy or re-configure cloudprober in response to the most of the
     changes.
 *   Low footprint. Cloudprober docker image is small, containing just the
     statically compiled binary and it takes very little CPU and RAM to run even
