@@ -27,7 +27,7 @@ minimum:
 |-------|------------|
 |total  | Total number of probes. |
 |success| Number of successful probes. Deficit between _total_ and _success_ indicates failures.|
-|latency| Cumulative probe latency. Latency can be configured to be a distribution (histogram) metric through a config option. By default it's just a counter like _total_ and _success_|
+|latency| Cumulative probe latency. Latency can be configured to be a distribution (histogram) metric through a config option. By default it's just a counter like _total_ and _success_.|
 
 
 ## Probe Types
