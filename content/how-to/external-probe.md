@@ -14,7 +14,7 @@ and time elapsed in execution. Cloudprober also allows external programs to prov
 
 ## Sample Probe
 To understand how it works, lets create a sample probe that sets and gets a key
-in a redis server. Here is the `main` function of such probe:
+in a redis server. Here is the `main` function of such a probe:
 
 {{< highlight go >}}
 func main() {
