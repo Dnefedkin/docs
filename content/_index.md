@@ -22,8 +22,7 @@ systems. This kind of monitoring makes it possible to monitor your systems'
 interfaces regardless of the implementation and helps you quickly pin down
 what's broken in your system.
 
-![Cloudprober Use
-Case](https://cloudprober.github.io/diagrams/cloudprober_use_case.svg)
+![Cloudprober Use Case](/diagrams/cloudprober_use_case.svg)
 
 ## Features
 

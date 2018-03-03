@@ -10,8 +10,7 @@ weight: 25
 External probe type allows you to run arbitrary, complex probes through
 Cloudprober. An external probe runs an independent external program for actual
 probing. Cloudprober calculates probe metrics based on program's exit status
-and execution time. Cloudprober also allows external programs to provide
-additional metrics over stdout.
+and time elapsed in execution. Cloudprober also allows external programs to provide additional metrics over stdout.
 
 ## Sample Probe
 To understand how it works, lets create a sample probe that sets and gets a key
@@ -126,8 +125,9 @@ The probe that we created above forks out a new `redis_probe` process for every
 probe cycle. This can get expensive if probe frequency is high and the process is big (e.g. a Java binary). Also, what if you want to keep some state across probes, for example, lets say you want to monitor performance over HTTP/2 where you keep using the same TCP connection for multiple HTTP requests. A new process
 everytime makes keeping state impossible.
 
-External probe's server mode provides a way to run the external probe process in daemon mode. Cloudprober communicates with this process over stdout/stdin (connected with OS pipes), using serialized protobuf messages. Cloudprober comes with a serverutils package that makes it easy to build external probe servers
-in Go.
+External probe's server mode provides a way to run the external probe process in daemon mode. Cloudprober communicates with this process over stdout/stdin (connected with OS pipes), using serialized protobuf messages. Cloudprober comes with a serverutils package that makes it easy to build external probe servers in Go.
+
+![External Probe Server](/diagrams/external_probe_server.svg)
 
 Please see the code at 
 [examples/external/redis_probe.go](https://github.com/google/cloudprober/blob/master/examples/external/redis_probe.go) for server mode implementation of the above probe. Here is the corresponding
