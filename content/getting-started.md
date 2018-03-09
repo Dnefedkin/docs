@@ -114,9 +114,9 @@ the probe metrics and build useful graphs through this interface. All probes
 in cloudprober export at least 3 counters:
 
 *   _total_: Total number of probes.
-*   _success_: Number of successful probes. Deficit between _total_ and
+*   _success_: Number of successful probes. Difference between _total_ and
 			   _success_ indicates failures.
-*   _latency_: Total (cumulative) probe latency (in microseconds).
+*   _latency_: Total (cumulative) probe latency.
 
 Using these counters, probe failure ratio and average latency can be calculated
 as:

@@ -1,11 +1,10 @@
 ---
 menu:
     main:
-        title: "External Probe"
         parent: "How-Tos"
+        weight: 25
 title: "External Probe"
 date: 2017-10-08T17:24:32-07:00
-weight: 25
 ---
 External probe type allows you to run arbitrary, complex probes through
 Cloudprober. An external probe runs an independent external program for actual
@@ -87,7 +86,7 @@ cloudprober 1519..4 1519583412 labels=ptype=external,probe=redis_probe,dst= succ
 ```
 
 You can import this data in prometheus following the process outlined at:
-[Running Prometheus]({{< ref "getting-started/index.md#running-prometheus" >}}). Before doing that, let's make it more interesting.
+[Running Prometheus]({{< ref "getting-started.md#running-prometheus" >}}). Before doing that, let's make it more interesting.
 
 ## Distributions
 How nice will it be if we could find distribution of the set and get latency. If tail latency was too high, it could explain the random timeouts in your application. Fortunately, it's very easy to create distributions in Cloudprober. You just need to add the following section to your probe definition:
@@ -117,7 +116,10 @@ How nice will it be if we could find distribution of the set and get latency. If
 {{< / highlight >}}
 
 This configuration adds options to aggregate the metrics in the cloudprober and configures "get\_latency\_ms" and "set\_latency\_ms" as distribution metrics with explicit buckets. Cloudprober will now build cumulative distributions using
-for these metrics. We can import this data in stackdriver or prometheus and get percentiles of the "get" and "set" latencies.
+for these metrics. We can import this data in Stackdriver or Prometheus and get the percentiles of the "get" and "set" latencies. Following screenshot shows the
+grafana dashboard built using these metrics.
+
+<a href="/diagrams/redis_probe_screenshot.png"><img style="float: center;" width=300px src="/diagrams/redis_probe_screenshot.png"></a>
 
 ## Server Mode
 
