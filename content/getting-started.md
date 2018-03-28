@@ -8,7 +8,7 @@ title: Getting Started
 ## Installation
 
 * __From Source__\
-If you have Go installed and GOPATH environment variable properly set up, you
+If you have Go 1.9 or higher installed and GOPATH environment variable properly set up, you
 can download and install `cloudprober` using the following commands:
 ```
 go get github.com/google/cloudprober
